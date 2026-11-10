@@ -24,7 +24,7 @@ header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:cen
 .nav-tab:hover{color:var(--tx);border-color:var(--ac)}
 .nav-tab.on{background:var(--ac);color:#0b1120;border-color:var(--ac)}
 
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
 .kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
 .kpi small{color:var(--sub);font-size:.7rem;text-transform:uppercase;display:block;letter-spacing:0.5px}
 .kpi b{font-size:1.25rem;display:block;margin-top:3px}
@@ -44,9 +44,8 @@ header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:cen
 .tip{position:fixed;display:none;background:#0f172a;border:1px solid var(--ac);color:var(--tx);padding:6px 10px;border-radius:7px;font-size:.78rem;pointer-events:none;z-index:200;box-shadow:0 4px 12px rgba(0,0,0,.4)}
 .det-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 
-/* Badge estilizado con soporte optimizado para logos de Google CDN */
 .badge{width:48px;height:48px;border-radius:10px;background:var(--ac);color:#0b1120;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.88rem;overflow:hidden;border:1px solid var(--bd);flex-shrink:0}
-.badge img{width:100%;height:100%;object-fit:contain;background:#ffffff;padding:4px;border-radius:8px}
+.badge img{width:100%;height:100%;object-fit:contain;background:var(--in);padding:6px}
 
 .m-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .mbox{background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:9px}
@@ -166,6 +165,10 @@ textarea{width:100%;height:220px;background:var(--in);border:1px solid var(--bd)
   <div class="kpis">
     <div class="kpi"><small>Valor Actual Cartera</small><b id="kVal">0 €</b><span id="kInv">Invertido: 0 €</span></div>
     <div class="kpi"><small>Plusvalía Latente</small><b id="kGain">0 €</b><span id="kGainPct">0,00%</span></div>
+    
+    <!-- NUEVA TARJETA DE VARIACIÓN DEL DÍA -->
+    <div class="kpi"><small>Variación del Día</small><b id="kDayGain">0 €</b><span id="kDayGainPct">0,00%</span></div>
+    
     <div class="kpi"><small id="kDivLbl">Dividendos Estimados (Bruto)</small><b id="kDiv" class="purp">0 € / año</b><span id="kDivM">~ 0 € / mes</span></div>
     <div class="kpi"><small id="kYieldLbl">Rentabilidad por Dividendo</small><b id="kYield" class="purp">0,00% Yield</b><span id="kYoc">YoC: 0,00%</span></div>
     <div class="kpi"><small>Mejor Posición</small><b id="kBest">—</b><span id="kBestSub">—</span></div>
@@ -187,6 +190,7 @@ textarea{width:100%;height:220px;background:var(--in);border:1px solid var(--bd)
       <div class="ring" id="ring"><div class="ring-hole"><b id="cPct">0%</b><span id="cName">—</span></div></div>
     </div>
 
+    <!-- DETALLE POSICIÓN CON SOPORTE PARA LOGO CORPORATIVO -->
     <div class="panel">
       <div class="p-head"><span class="p-title">Detalle Posición</span><span id="dRank" style="font-size:.78rem;color:var(--sub)">#1</span></div>
       <div class="det-top">
@@ -451,7 +455,6 @@ var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIrT1FTBDu
 var RAW="Telefónica|TEF|1894|12089.84|3.38|14.2|0.15|€|ING|Comunicaciones;Mapfre|MAP|3298|7824.98|4.16|11.5|0.16|€|ClickTrade|Finanzas;ACS|ACS|315|7118.35|87.15|15.8|2.00|€|ING|Industria;Iberdrola|IBE|828|4778.25|22.96|16.4|0.55|€|ING|Utilities;Enagás|ENG|547|9158.76|17.97|10.2|1.00|€|ClickTrade|Utilities;Naturgy|NTGY|161|3096.25|29.72|12.8|1.40|€|ClickTrade|Utilities;Banco Santander|SAN|1443|5560.08|10.88|6.5|0.20|€|ING|Finanzas;Redeia|RED|297|4515.90|15.80|11.4|0.80|€|ING|Utilities;Endesa|ELE|402|7450.92|44.58|13.1|1.20|€|ING|Utilities;AENA|AENA|200|3200.04|28.48|14.0|1.19|€|ING|Industria;Viscofán|VIS|47|1953.77|55.60|17.2|1.40|€|ING|Consumo básico;Ebro Foods|EBRO|309|4984.39|18.00|15.0|0.68|€|ING|Consumo básico;Inditex|ITX|70|1508.00|59.14|22.0|1.54|€|ING|Consumo discrecional;Logista|LOG|63|1986.95|37.22|13.5|1.85|€|ING|Industria;Vidrala|VID|12|1041.20|89.60|16.0|1.25|€|ING|Industria;Molson Coors|TAP|85|2881.09|40.33|10.5|1.76|$|IBKR|Consumo básico;Kraft Heinz|KHC|233|5886.60|24.61|11.2|1.60|$|IBKR|Consumo básico;3M|MMM|64|6066.97|185.15|18.4|2.80|$|IBKR|Industria;Kimberly Clark|KMB|44|4474.39|108.43|19.1|4.88|$|IBKR|Consumo básico;Pepsico|PEP|31.6324|4050.34|141.34|21.5|5.42|$|IBKR|Consumo básico;T Row Price|TROW|28|2191.19|108.41|12.8|4.96|$|IBKR|Finanzas;Diageo|DGE|250|4603.02|18.92|16.8|0.80|£|IBKR|Consumo básico;Vici Properties|VICI|105.6622|2455.97|24.79|11.5|1.73|$|IBKR|REIT;General Mills|GIS|75|2508.38|35.51|11.0|2.40|$|IBKR|Consumo básico;Wolters Kluwer|WKL|102.8714|6645.10|89.72|24.2|2.08|€|IBKR|Servicios emp.;ADP|ADP|20.3834|3620.94|303.35|25.1|5.60|$|IBKR|Servicios emp.;LVMH|LVMH|11.0474|4995.59|398.55|23.0|13.00|€|TR|Consumo discrecional;MSCI World ETF|SWDA|172|8359.35|127.06|0|0|€|DeGiro|ETF";
 var COLS="#38bdf8,#818cf8,#34d399,#fbbf24,#f87171,#a78bfa,#2dd4bf,#fb923c,#60a5fa,#4ade80,#f472b6,#c084fc,#22d3ee,#facc15".split(",");
 
-// MAPA DE DOMINIOS OFICIALES PARA GOOGLE FAVICONS CDN (ULTRA RÁPIDO Y RECONOCIDO)
 var DOMAINS = {
   "TEF": "telefonica.com", "MAP": "mapfre.com", "ACS": "grupoacs.com", "IBE": "iberdrola.com",
   "ENG": "enagas.es", "NTGY": "naturgy.com", "SAN": "santander.com", "RED": "redeia.com",
@@ -836,20 +839,19 @@ async function autoFetchFromSheet(){
   
   statusEl.textContent = "Datos cargados y actualizados en pantalla";
 }
-
-// MUESTRA DETALLE DE POSICIÓN CON SERVICIO DIRECTO GOOGLE FAVICONS CDN (SÍ CARGA SIEMPRE)
 function showDetail(k){
   sel=k;var act=curGrp.find(function(x){return x.k===sel;})||curGrp.slice(0,1).shift();if(!act)return;
   document.getElementById("cPct").textContent=fN(act.pct,1)+"%";document.getElementById("cName").textContent=act.n;
   document.getElementById("dRank").textContent="#"+(curGrp.findIndex(function(x){return x.k===act.k;})+1);
   
+  // LOGO CORPORATIVO DINÁMICO (Google Favicon Service)
   var badgeEl = document.getElementById("dBadge");
   var domain = DOMAINS[act.k.toUpperCase()];
   var shortTxt = act.k.slice(0,4);
 
   if(domain){
     var logoUrl = "https://www.google.com/s2/favicons?domain=" + domain + "&sz=128";
-    badgeEl.innerHTML = '<img src="' + logoUrl + '" alt="' + act.n + '" onerror="this.parentNode.innerHTML=\'' + shortTxt + '\'">';
+    badgeEl.innerHTML = '<img src="' + logoUrl + '" alt="' + act.n + '" onerror="this.outerHTML=\'' + shortTxt + '\'">';
   } else {
     badgeEl.textContent = shortTxt;
   }
@@ -998,7 +1000,13 @@ function render(){
     var yld=v>0?(dvTot/v)*100:0,yoc=itemNorm.i>0?(dvTot/itemNorm.i)*100:0;
     var ext = EXTRA_DATA[itemNorm.t] || {m:[3,6,9,12], dgr:3.0, hy:yld};
     var months = (ext.m && ext.m.length > 0) ? ext.m : [3,6,9,12];
-    return Object.assign({},itemNorm,{v:v,g:g,gp:gp,dvTot:dvTot,yld:yld,yoc:yoc,m:months,dgr:ext.dgr||3.0,hy:ext.hy||yld});
+    
+    // Cálculo del cambio del día individual
+    var pPrevDay = refDef.p || itemNorm.p;
+    var pctDay = pPrevDay > 0 ? ((itemNorm.p - pPrevDay) / pPrevDay) * 100 : 0;
+    var dayGainEUR = (v * (pctDay / 100));
+
+    return Object.assign({},itemNorm,{v:v,g:g,gp:gp,dvTot:dvTot,yld:yld,yoc:yoc,m:months,dgr:ext.dgr||3.0,hy:ext.hy||yld,pctDay:pctDay,dayGainEUR:dayGainEUR});
   });
 
   var enr = allEnriched.filter(function(x){ return x.a > 0; });
@@ -1008,6 +1016,19 @@ function render(){
   var totG=totV-totI;
   var totGp=totI>0?(totG/totI)*100:0;
   var totDiv=enr.reduce(function(s,x){return s+x.dvTot;},0);
+
+  // CÁLCULO GENERAL DE LA VARIACIÓN DEL DÍA DE LA CARTERA
+  var totDayGainEUR = enr.reduce(function(s,x){ return s + x.dayGainEUR; }, 0);
+  var prevDayValEUR = totV - totDayGainEUR;
+  var totDayGainPct = prevDayValEUR > 0 ? (totDayGainEUR / prevDayValEUR) * 100 : 0;
+
+  var kDayGainEl = document.getElementById("kDayGain");
+  var kDayGainPctEl = document.getElementById("kDayGainPct");
+  if(kDayGainEl && kDayGainPctEl){
+    kDayGainEl.textContent = (totDayGainEUR >= 0 ? "+" : "") + fM(totDayGainEUR, "€");
+    kDayGainEl.className = totDayGainEUR >= 0 ? "pos" : "neg";
+    kDayGainPctEl.textContent = (totDayGainPct >= 0 ? "+" : "") + fN(totDayGainPct, 2) + "%";
+  }
 
   var divAssets = enr.filter(function(x){ return x.dvTot > 0 || (x.dv > 0 && x.t !== "SWDA"); });
   var totVDiv = divAssets.reduce(function(s,x){ return s+x.v; }, 0);
